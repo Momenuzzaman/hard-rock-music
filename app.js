@@ -7,6 +7,13 @@ const searchSongs = () => {
     .then(res => res.json())
     .then(data => displaySong(data.data))  
 };
+
+ 
+document.getElementById("search").addEventListener("keypress", function(event) {
+    
+    if (event.key === "Enter")
+    document.getElementById("button").click();
+});
 const displaySong = songs => {
     const songContainer = document.getElementById("song-container");
     songContainer.innerText = '';
