@@ -1,15 +1,17 @@
 const searchSongs = () => {
     const searchText = document.getElementById("search").value;
 
-    const url = `https://api.lyrics.ovh/suggest/${searchText} `
+    const url = `https://api.lyrics.ovh/suggest/${searchText} `;
+    toggolSpinner();
     fetch(url)
     .then(res => res.json())
     .then(data => displaySong(data.data))  
 };
 const displaySong = songs => {
     const songContainer = document.getElementById("song-container");
+    songContainer.innerText = '';
    songs.forEach(song =>{
-       console.log(song)
+    //    console.log(song)
        const div = document.createElement("div");
        div.className ="single-result row align-items-center my-3 p-3";
        div.innerHTML = `
@@ -25,8 +27,25 @@ const displaySong = songs => {
             </div>
        `;
        songContainer.appendChild(div);
+       toggolSpinner();
    });
 }
 const getLyrics =(artist, title)=>{
-    console.log(artist,title);
+   const url = `https://api.lyrics.ovh/v1/${artist}/${title}`
+   fetch(url)
+   .then(res => res.json())
+   .then(data=>displayLyrics(data.lyrics))
 }   
+const displayLyrics = lyrics =>{
+    const lyricsDiv = document.getElementById("song-lyrics");
+    lyricsDiv.innerText=lyrics;
+};
+
+const toggolSpinner = () => {
+    const spinner=document.getElementById("spinner");
+    const songs = document.getElementById("song-container")
+        spinner.classList.toggle("d-none");
+        songs.classList.toggle("d-none");
+
+
+    };
